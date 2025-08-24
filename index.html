@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Jogos</title>
+        <link rel="stylesheet" href="c.css">
+        <script src="j.js"></script>
+        <style>
+            .f{border-radius: 10px;}
+        </style>
+    </head>
+    <body>
+        <p id="p0">Inicio</p>
+        <p id="p1"></p>
+        <fieldset id="f0" class="f"></fieldset>
+        <p id="p2"></p>
+        <p id="p3"></p>
+        <p id="p4"></p>
+        <fieldset id="f1" class="f"></fieldset>
+
+        <script>
+            f=[],b=[]
+            s=['Raciocinio','Logica','Memorize','Memória','Cores']
+
+            function ini(){
+                f[0]=ig('f0')
+                f[1]=ig('f1')
+            }ini()
+
+            function rei(){
+                dpn(f[1])
+            }rei()
+
+            for(let i=0;i<s.length;i++){
+                b[i]=ie('button')
+                ii(b[i],'b'+i)
+                ic(b[i],'b')
+                it(b[i],s[i])
+                ap(f[0],b[i])
+                b[i].onclick=()=>{
+                    location.href='p'+i+'.html'
+                }
+            }
+
+            function at(){
+
+            }
+            function rd(){
+                at()
+                window.requestAnimationFrame(rd)
+            }
+            // rd()
+        </script>
+    </body>
+</html>
