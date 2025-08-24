@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <link rel="stylesheet" href="../s/c.css">
+        <script src="../s/j.js"></script>
+    </head>
+    <body>
+        <a href="index.html">
+            <img src="../s/v.png" alt="Voltar">
+        </a>
+        <p id="p0"></p>
+        <p id="p1"></p>
+        <fieldset id="f0" class="f"></fieldset>
+        <p id="p2"></p>
+        <p id="p3"></p>
+        <p id="p4"></p>
+        <fieldset id="f1" class="f">
+            <button id="ca" class="b">Carregar</button>
+        </fieldset>
+
+        <script>
+            f=[]
+            let n,m,q,r,ct,aud
+            ta=['Calcule!','Memorize!','Total!','Número!']
+            b=[]
+
+            function ini(){
+                f[0]=ig('f0')
+                f[1]=ig('f1')
+
+                q=2
+
+                aud=[]
+                for(let i=0;i<2;i++)aud[i]=new Audio('../s/s'+i+'.wav')
+            }ini()
+
+            function rei(){
+                ct=0
+                it(p0,ta[ct])
+                r=[]
+                r[0]=''
+                r[1]=0
+                r[2]=''
+                r[3]=''
+                r[4]=''
+
+                n=[]
+                for(let i=0;i<q;i++){
+                    n[i]=mt(9,2)
+                    if(i<q-1)r[0]+=n[i]+' + '
+                    else r[0]+=n[i]+' = '
+
+                    r[1]+=n[i]
+                }
+                m=[]
+                for(let i=0;i<q;i++){
+                    m[i]=mt(10,0)
+                    r[3]+=m[i]
+                }
+                
+                it(p1,r[0])
+                it(p2,r[3])
+                dpn(p2)
+                dpn(p3)
+                dpn(f[0])
+                dpb(f[1])
+
+                it(p2,'Resposta')
+                it(p3,r[0]+' '+r[1])
+                c0(p2,'red')
+                c1(p2,'white')
+                c0(p3,'red')
+                c1(p3,'white')
+            }rei()
+
+            for(let i=0;i<11;i++){
+                b[i]=ie('button')
+                ii(b[i],'b'+i)
+                ic(b[i],'b')
+                if(i==10)it(b[i],'Limpar')
+                else it(b[i],i)
+                ap(f[0],b[i])
+                b[i].onclick=()=>{
+                    if(ct==2){
+                        if(r[1].toString().length>r[2].length){
+                            if(i==10){
+                                r[2]=''
+                                it(p1,'|')
+                            }else{
+                                r[2]+=i
+                                it(p1,r[2])
+                            }
+                        }
+
+                        if(r[1].toString().length==r[2].length){
+                            if(r[1]==r[2]){
+                                ct++
+                                it(p0,ta[ct])
+                                it(p1,'|')
+                                aud[1].play()
+                            }else{
+                                it(p0,'Errou!')
+                                it(p2,'Resposta')
+                                it(p3,r[0]+' '+r[1])
+                                dpb(p2)
+                                dpb(p3)
+                                dpn(f[0])
+                                dpb(f[1])
+                                aud[0].play()
+                                q=2
+                            }
+                        }
+                    }else{
+                        if(r[3].toString().length>r[4].length){
+                            if(i==10){
+                                r[4]=''
+                                it(p1,'|')
+                            }else{
+                                r[4]+=i
+                                it(p1,r[4])
+                            }
+                        }
+
+                        if(r[3].toString().length==r[4].length){
+                            if(r[3]==r[4]){
+                                it(p0,'Acertou!')
+                                dpn(f[0])
+                                dpb(f[1])
+                                q++
+                                aud[1].play()
+                            }else{
+                                it(p0,'Errou!')
+                                dpb(p2)
+                                it(p3,r[3])
+                                dpb(p3)
+                                dpn(f[0])
+                                dpb(f[1])
+                                aud[0].play()
+                                q=2
+                            }
+                        }
+                    }
+                }
+            }
+
+            function at(){
+
+            }
+            function rd(){
+                at()
+                window.requestAnimationFrame(rd)
+            }
+            // rd()
+
+            ca.onclick=()=>{
+                if(ct==0){
+                    ct++
+                    it(p0,ta[ct])
+                    it(p1,r[3])
+                }else if(ct==1){
+                    ct++
+                    it(p0,ta[ct])
+                    it(p1,'|')
+                    dpb(f[0])
+                    dpn(f[1])
+                }else rei()
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <link rel="stylesheet" href="../s/c.css">
+        <script src="../s/j.js"></script>
+    </head>
+    <body>
+        <a href="index.html">
+            <img src="../s/v.png" alt="Voltar">
+        </a>
+        <p id="p0"></p>
+        <p id="p1"></p>
+        <fieldset id="f0" class="f"></fieldset>
+        <p id="p2"></p>
+        <p id="p3"></p>
+        <p id="p4"></p>
+        <fieldset id="f1" class="f"></fieldset>
+        <p id="p5"></p>
+
+        <script>
+            let f,n,q,j,aa,ab,ac,m,t,cnt
+            let b=[],c=[]
+
+            function ini(){
+                f=[]
+                f[0]=ig('f0')
+                f[1]=ig('f1')
+                q=[]
+                q[0]=12
+                q[1]=0
+                q[2]=18
+            }ini()
+
+            function rei(){
+                dpn(f[0])
+                c0(p0,null)
+                c0(p1,null)
+                c0(p2,null)
+                c0(p3,null)
+                c0(p4,null)
+                c0(p5,'red')
+                c1(p5,'white')
+            
+                it(p0,'Memória')
+                it(p1,'Jogadas \u00A0\u00A0\u00A0 : '+q[1]+' / '+q[2])
+                it(p5,'Perdeu!')
+                
+                dpn(p5)
+
+                n=[]
+                j=[]
+                for(let i=0;i<q[0];i++){
+                    n[i]=i
+                    j[i]=0
+                }
+                sorte(n)
+
+                aa=0
+                ab=[]
+                ac=[]
+
+                m=0
+                t=[]
+                t[0]=0
+                t[1]=40
+                t[2]=150
+
+                cnt=0
+            }rei()
+
+            for(let i=0;i<k.length;i++){
+                b[i]=ie('button')
+                ii(b[i],'b'+i)
+                ic(b[i],'b')
+                c0(b[i],k[n[i]])
+                if(i<q[0])dpi(b[i])
+                else dpn(b[i])
+                idm(b[i],100)
+                ap(f[0],b[i])
+            }
+            for(let i=0;i<k.length;i++){
+                c[i]=ie('button')
+                ii(c[i],'b'+i)
+                ic(c[i],'b')
+                c0(c[i],'darkgray')
+                if(i<q[0])dpi(c[i])
+                else dpn(c[i])
+                idm(c[i],60)
+                ap(f[1],c[i])
+                c[i].onclick=()=>{
+                    if(j[i]==0 && aa<2){
+                        c0(c[i],k[n[i]])
+                        ab[aa]=k[n[i]]
+                        ac[aa]=i
+
+                        aa++
+                        if(aa==2)m=1
+                    }
+                }
+            }
+
+            function md0(){
+                if(ab[0]==ab[1]){
+                    c0(c[ac[0]],'black')
+                    c0(c[ac[1]],'black')
+                    cnt++
+                    j[ac[0]]=1
+                    j[ac[1]]=1
+                }else{
+                    c0(c[ac[0]],'darkgray')
+                    c0(c[ac[1]],'darkgray')
+                }
+                aa=0
+                t[0]=0
+                m=0
+                q[1]++
+                it(p1,'Jogadas \u00A0\u00A0\u00A0 : '+q[1]+' / '+q[2])
+                if(q[1]>=q[2]){
+                    if(cnt<q[0]/2){
+                        dpb(p5)
+                        for(let i=0;i<k.length;i++){
+                            j[i]=1
+                        }
+                        m=2
+                    }
+                }
+            }
+            function md1(){
+                if(cnt==q[0]/2){
+                    t[0]++
+                    if(t[0]>t[2]){
+                        if(q[0]<30)q[0]+=2
+                        q[1]=0
+                        q[2]+=2
+                        rei()
+                        for(let i=0;i<k.length;i++){
+                            c0(b[i],k[n[i]])
+                            if(i<q[0])dpi(b[i])
+                            else dpn(b[i])
+                        }
+                        for(let i=0;i<k.length;i++){
+                            c0(c[i],'darkgray')
+                            if(i<q[0])dpi(c[i])
+                            else dpn(c[i])
+                        }
+                    }
+                }
+            }
+            function md2(){
+                q[1]=0
+                if(q[0]>12){
+                    q[0]=-2
+                    q[2]-=2
+                }
+                rei()
+                for(let i=0;i<k.length;i++){
+                    c0(b[i],k[n[i]])
+                    if(i<q[0])dpi(b[i])
+                    else dpn(b[i])
+                }
+                for(let i=0;i<k.length;i++){
+                    c0(c[i],'darkgray')
+                    if(i<q[0])dpi(c[i])
+                    else dpn(c[i])
+                }
+            }
+
+            function at(){
+                if(m==1){
+                    t[0]++
+                    if(t[0]>t[1])md0()
+                }
+
+                md1()
+
+                if(m==2){
+                    t[0]++
+                    if(t[0]>t[1])md2()
+                }
+            }
+            function rd(){
+                at()
+                window.requestAnimationFrame(rd)
+            }
+            rd()
+        </script>
+    </body>
+</html>

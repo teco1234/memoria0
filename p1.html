@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <link rel="stylesheet" href="../s/c.css">
+        <script src="../s/j.js"></script>
+    </head>
+    <body>
+        <a href="index.html">
+            <img src="../s/v.png" alt="Voltar">
+        </a>
+        <p id="p0"></p>
+        <p id="p1"></p>
+        <fieldset id="f0" class="f"></fieldset>
+        <div id="di">
+            <p id="p2">Resposta</p><br>
+            <p id="p3"></p>
+            <p id="p4"></p>
+        </div>
+        <fieldset id="f1" class="f">
+            <button id="ca" class="b">Carregar</button>
+        </fieldset>
+        <fieldset id="f2" class="f"></fieldset>
+        <p id="p5"></p>
+
+        <script>
+            let f,cor,q,b=[],bn=[],c,n,r,m
+            let op,pontos,som
+
+            function ini(){
+                f=[]
+                f[0]=ig('f0')
+                f[1]=ig('f1')
+                f[2]=ig('f2')
+                
+                q=[]
+                q[0]=10
+                q[1]=2
+                q[2]=11
+
+                pontos=0
+                som=[]
+                for(let i=0;i<2;i++)som[i]=au('../s/s'+i+'.wav')
+            }ini()
+
+            function rei(){
+                cor=[]
+                cor.length=0
+                for(let i=0;i<q[0];i++){
+                    cor[i]=ncr()
+                }
+
+                n=[]
+                r=[]
+                r[0]=''
+                r[1]=''
+                for(let i=0;i<q[1];i++){
+                    n[i]=mt(10,0)
+                    r[0]+=n[i]
+                }
+                
+                it(p0,'Memorize!')
+                it(p1,r[0])
+
+                c=[]
+                c[0]=mt(cor.length,0)
+                c[1]=mt(cor.length,0)
+
+                c0(p0,'white')
+                c0(p1,'white')
+                
+                c1(p0,cor[c[0]])
+                c1(p1,cor[c[1]])
+
+                dpn(f[0])
+                dpn(f[2])
+
+                m=0
+
+                it(p3,'Memorize!')
+                it(p4,r[0])
+                c0(p2,'red')
+                c0(p3,'white')
+                c0(p4,'white')
+
+                bdr(di,'2px solid red')
+                c1(p3,cor[c[0]])
+                c1(p4,cor[c[1]])
+
+                dpn(di)
+
+                op=false
+
+                it(p5,'Pontos : '+pontos)
+            }rei()
+
+            for(let i=0;i<cor.length;i++){
+                b[i]=ie('button')
+                ii(b[i],'b'+i)
+                ix(0,b[i],50)
+                ix(1,b[i],50)
+                c0(b[i],cor[i])
+                ibn(b[i])
+                irg(b[i],4)
+                ap(f[0],b[i])
+                b[i].onclick=()=>{
+                    if(!op){
+                        if(m==1){
+                            if(i==c[0]){
+                                it(p0,'2º cor')
+                                m=2
+                                som[1].play()
+                            }else{
+                                dpb(di)
+                                dpb(f[1])
+                                op=true
+                                it(p0,'Errou!')
+                                c0(p0,'red')
+                                c1(p0,'white')
+                                pontos=0
+                                som[0].play()
+                            }
+                        }else if(m==2){
+                            if(i==c[1]){
+                                it(p0,'Digite o número')
+                                it(p1,'|')
+                                dpb(f[2])
+                                dpn(f[0])
+                                som[1].play()
+                            }else{
+                                dpb(di)
+                                dpb(f[1])
+                                op=true
+                                it(p0,'Errou!')
+                                c0(p0,'red')
+                                c1(p0,'white')
+                                pontos=0
+                                som[0].play()
+                            }
+                        }
+                    }
+                }
+            }
+
+            function btcor(){
+                for(let i=0;i<cor.length;i++){
+                    c0(b[i],cor[i])
+                }
+            }
+
+            for(let i=0;i<q[2];i++){
+                bn[i]=ie('button')
+                ic(bn[i],'b')
+                if(i<10)it(bn[i],i)
+                else it(bn[i],'L')
+                ap(f[2],bn[i])
+                bn[i].onclick=()=>{
+                    if(r[0].toString().length>r[1].length){
+                        if(i==10){
+                            r[1]=''
+                            it(p1,'|')
+                        }else{
+                            r[1]+=i
+                            it(p1,r[1])
+                        }
+
+                        if(r[0].length==r[1].length){
+                            if(r[0]==r[1]){
+                                c0(p0,'blue')
+                                c1(p0,'white')
+                                it(p0,'Acertou!')
+                                dpn(f[2])
+                                dpb(f[1])
+                                pontos++
+                                som[1].play()
+                            }else{
+                                it(p0,'Errou!')
+                                c0(p0,'red')
+                                c1(p0,'white')
+                                dpb(f[1])
+                                dpn(f[2])
+                                dpb(di)
+                                pontos=0
+                                som[0].play()
+                            }
+                        }
+                    }
+                }
+            }
+
+            ca.onclick=()=>{
+                if(m==0){
+                    m=1
+                    dpb(f[0])
+                    dpn(f[1])
+                    c1(p0,'black')
+                    c1(p1,'black')
+                    it(p0,'1º cor')
+                    it(p1,'-')
+                }else{
+                    rei()
+                    btcor()
+                } 
+                
+            }
+
+            function at(){
+
+            }
+            function rd(){
+                at()
+                window.requestAnimationFrame(rd)
+            }
+            // rd()
+        </script>
+    </body>
+</html>

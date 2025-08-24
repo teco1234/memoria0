@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <link rel="stylesheet" href="../s/c.css">
+        <script src="../s/j.js"></script>
+    </head>
+    <body>
+        <a href="index.html">
+            <img src="../s/v.png" alt="Voltar">
+        </a>
+        <p id="p0"></p>
+        <p id="p1"></p>
+        <fieldset id="f0" class="f"></fieldset>
+        <div id="dv">
+            <p id="p2"></p>
+            <p id="p3"></p>
+            <p id="p4"></p>
+        </div>
+        
+        <fieldset id="f1" class="f"></fieldset>
+            <p id="p5"></p>
+        <script>
+            f=[],b=[],bt=[]
+            let q,n,aa,ab,ac,ad,t,cnta,m
+
+            function ini(){
+                f[0]=ig('f0')
+                f[1]=ig('f1')
+                q=[]    
+                q[0]=4
+                m=0
+            }ini()
+
+            function rei(){
+                dpb(p0)
+                c0(p0,null)
+                c1(p0,'black')
+                it(p0,'Memorize')
+
+                dpn(p5)
+                dpb(f[0])
+                dpn(f[1])
+
+                n=[]
+                aa=[]
+                ab=[]
+                ac=0
+                ad=[]
+                for(let i=0;i<k.length;i++){
+                    if(i<q[0])n[i]=i
+                    aa[i]=0
+                }
+                sorte(n)
+
+                t=[]
+                t[0]=0
+                t[1]=150
+
+                cnta=0
+            }rei()
+
+            for(let i=0;i<k.length;i++){
+                bt[i]=ie('button')
+                ii(bt[i],'b'+i)
+                c0(bt[i],k[n[i]])
+                idm(bt[i],60)
+                // ibn(bt[i])
+                irg(bt[i],4)
+                if(i>=q[0])dpn(bt[i])
+                else dpi(bt[i])
+                ap(f[0],bt[i])
+            }
+
+            for(let i=0;i<k.length;i++){
+                b[i]=ie('button')
+                ii(b[i],'b'+i)
+                c0(b[i],'darkgray')
+                idm(b[i],60)
+                ibn(b[i])
+                irg(b[i],4)
+
+                if(i>=q[0])dpn(b[i])
+                else dpi(b[i])
+                ap(f[1],b[i])
+                b[i].onclick=()=>{
+                    if(aa[i]==0 && ac<2){
+                        aa[i]=1
+                        ab[ac]=k[n[i]]
+                        ad[ac]=i
+                        c0(b[i],k[n[i]])
+                        
+                        ac++
+                        if(ac==2){
+                            if(ab[0]==ab[1]){}
+                            else{
+                                dpb(p0)
+                                c0(p0,'red')
+                                c1(p0,'white')
+                                it(p0,'Errou!')
+                            }
+                            // ac=0
+                        }
+                    }
+                }
+            }
+
+            function muda0(){
+                c0(b[ad[0]],'black')
+                c0(b[ad[1]],'black')
+            }
+
+            function at(){
+                if(m==0){
+                    t[0]++
+                    if(t[0]>t[1]){
+                        dpn(f[0])
+                        dpb(f[1])
+                        m=1
+                        t[0]=0
+                        t[1]=60
+                        dpn(p0)
+                    }
+                }else{
+                    if(ac==2){
+                        t[0]++
+                        if(t[0]>t[1]){
+                            if(ab[0]==ab[1]){
+                                muda0()
+                                t[0]=0
+                                ac=0
+                                cnta++
+                            }else{
+                                if(q[0]>4)q[0]-=2
+                                rei()
+                                for(let i=0;i<k.length;i++){
+                                    c0(bt[i],k[n[i]])
+                                    if(i>=q[0])dpn(bt[i])
+                                    else dpi(bt[i])
+                                }
+                                for(let i=0;i<k.length;i++){
+                                    c0(b[i],'darkgray')
+                                    if(i>=q[0])dpn(b[i])
+                                    else dpi(b[i])
+                                }
+                                
+                                m=0
+                            }
+                        }
+                    }
+                    if(cnta==q[0]/2){
+                            dpb(p5)
+                            c0(p5,'blue')
+                            c1(p5,'white')
+                            it(p5,'Acertou!')
+                        t[0]++
+                        if(t[0]>t[1]){
+                            q[0]+=2
+                            rei()
+                            for(let i=0;i<k.length;i++){
+                                c0(bt[i],k[n[i]])
+                                if(i>=q[0])dpn(bt[i])
+                                else dpi(bt[i])
+                            }
+                            for(let i=0;i<k.length;i++){
+                                c0(b[i],'darkgray')
+                                if(i>=q[0])dpn(b[i])
+                                else dpi(b[i])
+                            }
+                            m=0
+                            
+                        }
+                    }
+                }
+                
+            }
+            function rd(){
+                at()
+                window.requestAnimationFrame(rd)
+            }
+            rd()
+        </script>
+    </body>
+</html>
